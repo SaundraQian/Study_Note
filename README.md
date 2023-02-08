@@ -60,5 +60,5 @@ DataSource is alternative approach which uses similar info to DataManager but JN
 
 ## Create Statement & Query
 
-
+After we have instance of Connection, we use `createStatement()` method to obtain instance of Statement.
 
