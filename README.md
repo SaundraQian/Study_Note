@@ -198,9 +198,9 @@ while (resultSet.next()) {
 
 when `ResultSet` changes, it can also change underlying database immediatedly or wait next query (these teatures set with `createStatement()`
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption><p>Week 3 PPT - p13</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Week 3 PPT - p13</p></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Week 3 PPT - p14</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Week 3 PPT - p14</p></figcaption></figure>
 
 ### RowSet
 
