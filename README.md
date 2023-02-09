@@ -70,15 +70,51 @@ Statement statement = connection.createStatement();
 
 It is a overloaded method which common from has no aeguments
 
+Recall statement which means obatianed via `createStatement()` of class Connection then pass SQL statement as aegument to executeQuery() method of class Atatement:
+
+```java
+Connection connection = null;
+Statement statement = null;
+ResultSet resultSet = null;
+...
+statement = connection.createStatement();
+resultSet = statement.executeQuery(
+    "SELECT authorID, firstname, lastname from authors");
+```
+
 ### PreparedStatement
+
+The use of a prepared statement in JDBC is a secure way to execute an SQL command, especially when the SQL command includes end-user input.&#x20;
 
 `PreparedStatement` like Statement but uses `Statement` is the parent class of `PreparedStatement`
 
 ```java
-Statement statement = connection.createStatement(sql);
+Statement statement = connection.prepardStatement(sql);
 ```
 
 more detail: [https://blog.csdn.net/weixin\_41092717/article/details/82853704](https://blog.csdn.net/weixin\_41092717/article/details/82853704)
+
+The prepared statement allows you to define the SQL command with placeholders for the dynamic input&#x20;
+
+e.g. "select \* from user where name = ?", and then bind the actual values to the placeholders before executing the command.&#x20;
+
+* `PreparedStatement()` use insted of Statement
+  * ? is a placeholder
+  * can have multiple. use setString() with 1,2,3...
+
+In contrast, using a regular Statement and concatenating the user input directly into the SQL command&#x20;
+
+e.g. "select \* from user where name = '" + name + "'" leaves the application vulnerable to SQL injection attacks, as any malicious input will be executed as part of the SQL command.
+
+* prevents  SQL injection&#x20;
+  * `prepareStatement()` interprets it String arg as SQL but `setString()` does simple replacement
+    * not inerpretation as SQL because any SQL in the input from end-user is not interpreted
+
+```java
+preparedStatement prepQuery = connection.prepareStatement(
+    "select * from user where name = ?");
+prepQuery.setString(1, name);
+```
 
 * CallableStatement used to invoke stored procedure in database (won't use it in this course)
 
@@ -137,7 +173,7 @@ isAutoIncrement(int column)：
 
 getters for each data type which get by column name or column number.&#x20;
 
-to loop through a `ResultSet()` instance by row looks like Iterator from Collecrtion but it is not <mark style="color:purple;">"cursor" is positioned before first row</mark> when `ResultSet()` instance created
+to loop through a `ResultSet` instance by row looks like Iterator from Collecrtion but it is not <mark style="color:purple;">"cursor" is positioned before first row</mark> when `ResultSet` instance created
 
 also no `hasNext()` method, use `next()` instead
 
@@ -158,13 +194,39 @@ while (resultSet.next()) {
 
 ```
 
-`ResultSet()` can retrieve rows by going forward like the previous example or in either direction.
+`ResultSet` can retrieve rows by going forward like the previous example or in either direction.
 
-when `ResultSet()` changes, it can also change underlying database immediatedly or wait next query (these teatures set with `createStatement()`
+when `ResultSet` changes, it can also change underlying database immediatedly or wait next query (these teatures set with `createStatement()`
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption><p>Week 3 PPT - p13</p></figcaption></figure>
 
 <figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Week 3 PPT - p14</p></figcaption></figure>
+
+### RowSet
+
+scrollable ResultSet is very powerful but must be connected to database for duration beaucese database connected are often a scare resource.
+
+RowSet extends ResultSet
+
+* which does not require to be always connected
+* may be more suited to smaller client dvices
+
+RowSet has mult.sub-interfaces
+
+* JdbcRowSet&#x20;
+  * thin wrapper adding get/setter's creating a Bean
+  * needs to be always connectd
+
+```java
+JdbcRowSetrowSet = 
+    RowSetProvider.newFactory().createJdbcRowSet();
+```
+
+* CachedRowSet
+  * connects as needed for database operations
+  * scrollable, updatable, serializable & follows Bean
+
+More information：[https://www.geeksforgeeks.org/what-is-rowset-in-java-jdbc/](https://www.geeksforgeeks.org/what-is-rowset-in-java-jdbc/)
 
 ## Close Connection, etc
 
