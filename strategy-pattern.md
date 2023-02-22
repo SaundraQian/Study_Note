@@ -22,7 +22,7 @@ public interface UnitConversion {
 
 ```
 
-//CClient
+//Context
 public class UnitConverter {
   private UnitConversion unitConversion;
    
@@ -59,7 +59,7 @@ public class FCconverter implements UnitConversion {
 	}
 }
 
-//context
+//client
 ```java
 public class UnitConverterTest {
     public static void main(String[] args) {
