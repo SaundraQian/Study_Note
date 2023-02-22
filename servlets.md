@@ -29,7 +29,7 @@ in N- tier model&#x20;
 
 `init()` and `destroy()` from class HttpServlet&#x20;
 
-* `init()` method called when servlet first created  bur not called again as long as the servlet is not destroyed.&#x20;
+* `init()` method called when servlet first created  but not called again as long as the servlet is not destroyed.&#x20;
 * `destroy()` method is invoked once:
   * all in `service()` method have exited&#x20;
   * or after timeout period&#x20;
